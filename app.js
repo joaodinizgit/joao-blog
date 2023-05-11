@@ -19,12 +19,12 @@ app.use(myLogger)
 ////
 
 // Example
-const requesTime = function (req, res, next) {
+const requestTime = function (req, res, next) {
     req.requestTime = Date.now()
     next()
   }
   
-  app.use(requesTime)
+  app.use(requestTime)
 ///
 
 

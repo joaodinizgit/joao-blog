@@ -69,3 +69,27 @@ Express looks up the files relative to the static directory, so the name of the 
         ├── error.pug
         ├── index.pug
         └── layout.pug
+
+## req.body
+
+Contains key-value pairs of data submitted in the request body. By default, it is undefined, and is populated when you use body-parsing middleware such as `express.json()` or `express.urlencoded()`.
+
+## Middlewares
+
+Middleware functions are functions that have access to the request object (req), the response object (res), and the next function in the application’s request-response cycle. The next function is a function in the Express router which, when invoked, executes the middleware succeeding the current middleware.
+
+
+Execute any code.
+Make changes to the request and the response objects.
+End the request-response cycle.
+Call the next middleware in the stack.
+
+## Install a Template Engine
+
+Choosed EJS
+
+    npm install ejs
+
+
+
+

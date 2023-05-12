@@ -11,34 +11,31 @@ app.use(express.urlencoded( {extended: true}))
 
 app.use(express.static('public'))
 
-// Example
-const myLogger = function (req, res, next) {
-    console.log('LOGGED')
-    next()
-}
-  
-app.use(myLogger)
-
-
+// Routes
 app.get("/", (req, res) => {
-    res.render("index", {title: "Main Page", titlepage:"Main Page"})
+    res.render("index", {title: "Index"})
 })
-
 
 app.get("/user", (req, res) => {
     res.render("user", {title: "User Page", titlepage: "Users"})
 })
 
+app.route("/login") 
+.get((req, res) => {
+    res.render("login", {title: "Login"})
+})
+.post((req, res) => {
+    const login = req.body
+    console.log(login.username.toUpperCase())
+    res.redirect("/")
+})
+
 app.get("/register", (req, res) => {
-    res.render("register", {title: "Register", titlepage: "Register"})
+    res.render("register", {title: "Register"})
 })
 
 app.get("/post", (req, res) => {
-    res.render("post", {title: "Post Area", titlepage: "Post Area"})
-})
-
-app.get("/login", (req, res) => {
-    res.render("login", {title: "Post Area", titlepage: "Login Area"})
+    res.render("post", {title: "Post Area"})
 })
 
 app.post("/post/newpost", (req, res) => {

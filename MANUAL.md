@@ -66,9 +66,9 @@ Express looks up the files relative to the static directory, so the name of the 
     │   ├── index.js
     │   └── users.js
     └── views
-        ├── error.pug
-        ├── index.pug
-        └── layout.pug
+        ├── error.ejs
+        ├── index.ejs
+        └── layout.ejs
 
 ## req.body
 
@@ -90,6 +90,17 @@ Choosed EJS
 
     npm install ejs
 
+Pass EJS a template string and some data.
+
+```js
+let ejs = require('ejs');
+let people = ['geddy', 'neil', 'alex'];
+let html = ejs.render('<%= people.join(", "); %>', {people: people});
+```
+
+Create o folder called "views" and a file called "index.ejs"
+
+    app.set("view engine", "ejs")
 
 
 

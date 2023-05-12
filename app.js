@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+app.set("view engine", "ejs")
+
 const port = 3000
 
 // To take objects from a form
@@ -29,7 +31,7 @@ const requestTime = function (req, res, next) {
 
 
 app.get("/", (req, res) => {
-    res.send("Home")
+    res.render("layout", {title: "Index Page", titlepage:"Index"})
 })
 
 app.get('/teste', (req, res) => {
@@ -39,7 +41,8 @@ app.get('/teste', (req, res) => {
   })
 
 app.get("/user", (req, res) => {
-    res.send("User Area")
+    res.render("layout", {title: "User Page", titlepage: "Users"})
+    
 })
 
 app.get("/post", (req, res) => {

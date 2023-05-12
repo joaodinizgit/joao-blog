@@ -18,35 +18,27 @@ const myLogger = function (req, res, next) {
 }
   
 app.use(myLogger)
-////
-
-// Example
-const requestTime = function (req, res, next) {
-    req.requestTime = Date.now()
-    next()
-  }
-  
-  app.use(requestTime)
-///
 
 
 app.get("/", (req, res) => {
-    res.render("layout", {title: "Index Page", titlepage:"Index"})
+    res.render("index", {title: "Main Page", titlepage:"Main Page"})
 })
 
-app.get('/teste', (req, res) => {
-    let responseText = 'Hello World!<br>'
-    responseText += `<small>Requested at: ${req.requestTime}</small>`
-    res.send(responseText)
-  })
 
 app.get("/user", (req, res) => {
-    res.render("layout", {title: "User Page", titlepage: "Users"})
-    
+    res.render("user", {title: "User Page", titlepage: "Users"})
+})
+
+app.get("/register", (req, res) => {
+    res.render("register", {title: "Register", titlepage: "Register"})
 })
 
 app.get("/post", (req, res) => {
-    res.send("Post Area")
+    res.render("post", {title: "Post Area", titlepage: "Post Area"})
+})
+
+app.get("/login", (req, res) => {
+    res.render("login", {title: "Post Area", titlepage: "Login Area"})
 })
 
 app.post("/post/newpost", (req, res) => {

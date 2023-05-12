@@ -1,0 +1,17 @@
+body {
+    font-family: sans-serif, serif;
+    
+}
+
+.navbar-ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.navbar-ul li {
+    margin: 0px 15px;
+    list-style: none;
+    
+}

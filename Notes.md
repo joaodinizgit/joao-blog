@@ -63,12 +63,17 @@ Express looks up the files relative to the static directory, so the name of the 
     │   └── stylesheets
     │       └── style.css
     ├── routes
-    │   ├── index.js
-    │   └── users.js
+    │   ├── 
+    │   └── 
     └── views
-        ├── error.ejs
+        ├── footer.ejs
+        ├── header.ejs
         ├── index.ejs
+        ├── login.ejs
+        ├── post.ejs
+        ├── register.ejs
         └── layout.ejs
+
 
 ## req.body
 
@@ -117,4 +122,9 @@ For example, use the following code to serve images, CSS files, and JavaScript f
     app.use(express.static('public'))
 
 
+## Session to Authentication
 
+
+    npm install escape-html
+
+    npm install express-session

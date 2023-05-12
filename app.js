@@ -26,7 +26,7 @@ app.route("/login")
 })
 .post((req, res) => {
     const login = req.body
-    console.log(login.username.toUpperCase())
+    console.log(login)
     res.redirect("/")
 })
 

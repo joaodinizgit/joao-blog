@@ -1,8 +1,15 @@
 <%- include ("header.ejs") %> 
 
 <body>
-    <h1>Index</h1>
-</body>
+    <div class="title">
+        <h1>Main Page</h1>
+    </div>
 
+    <% if (usr1) { %>
+        <p> 
+            <%=usr1 %> 
+        </p>
+    <% }  %>
+</body>
 
 <%- include ("footer.ejs") %>

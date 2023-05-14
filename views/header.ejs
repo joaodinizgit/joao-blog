@@ -12,9 +12,13 @@
     <nav class="navbar">
         <ul class="navbar-ul">
             <li><a href="/">Home</a></li>
-            <li><a href="/register">Register</a></li>
-            <li><a href="/post">New Post</a></li>
-            <li><a href="/logout">Logout</a></li>
-            <li><a href="/login">Login</a></li>
+            <% if (usr1) { %>
+                <li><a href="/newpost">New Post</a></li>
+                <li><a href="/logout">Logout</a></li>
+                <li><p>Welcome <%=usr1%>!</p></li>
+            <% } else { %>
+                <li><a href="/register">Register</a></li>
+                <li><a href="/login">Login</a></li>
+            <% } %>
         </ul>
     </nav>

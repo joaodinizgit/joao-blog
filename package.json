@@ -10,6 +10,7 @@
   "author": "João Diniz",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "ejs": "^3.1.9",
     "escape-html": "^1.0.3",
     "express": "^4.18.2",

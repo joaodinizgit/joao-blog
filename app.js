@@ -3,11 +3,11 @@ const app = express()
 const registerIsValid = require('./middlewares/register-validation.js');
 const session = require('express-session')
 const escapeHtml = require('escape-html')
-let logged = ""
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const port = 3000
 
 app.set("view engine", "ejs")
-
-const port = 3000
 
 // To take objects from a form
 app.use(express.urlencoded( {extended: true}))
@@ -28,13 +28,13 @@ app.use(function (req, res, next) {
     next()
 })
 
-// Middleware to check is user is logged
+// Middleware to check if user is logged
 app.use(function (req, res, next) { 
     res.locals.usr1 = req.session.user
     next()
 })
 
-// Middleware to test if is authenticated
+// Middleware to test if the client is authenticated
 function isAuthenticated (req, res, next) {
     if (req.session.user) next()
     else res.redirect('/')
@@ -48,7 +48,6 @@ app.get('/', (req, res) => {
 app.post('/register',registerIsValid, (req, res) => {
     //  TODO: validate inputs
     console.log(req.body)
-    
     res.redirect('/')
 })
 
@@ -65,7 +64,13 @@ app.post('/login', (req, res) => {
     console.log(req.body)
     // login logic to validate req.body.user and req.body.pass
     // would be implemented here. for this example any combo works
-    // TODO: Connect with database hashed
+    // Hash the password:
+    bcrypt.genSalt(saltRounds, function(err, salt) {
+        bcrypt.hash(req.body.pass, salt, function(err, hash) {
+            // Store hash in your password DB.
+            console.log("Password hashed: ",hash)
+        });
+    });
   
     // regenerate the session, which is good practice to help
     // guard against forms of session fixation
@@ -115,9 +120,6 @@ app.route("/newpost")
     console.log(post)
     res.send("Got your post")
 })
-
-
-
 
 // Server listening
 app.listen(3000, () => {

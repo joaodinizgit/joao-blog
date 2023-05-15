@@ -6,6 +6,19 @@ const escapeHtml = require('escape-html')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const port = 3000
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('./db/users3.db')
+
+
+db.serialize(() => {
+    db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT)");
+
+    db.run("INSERT INTO users(username) VALUES ('do')");
+    
+});
+
+db.close();
+
 
 app.set("view engine", "ejs")
 

@@ -121,9 +121,7 @@ For example, use the following code to serve images, CSS files, and JavaScript f
 
     app.use(express.static('public'))
 
-
 ## Session to Authentication
-
 
     npm install escape-html
 

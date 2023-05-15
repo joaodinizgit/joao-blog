@@ -26,25 +26,15 @@ body {
 .navbar-ul li {
     margin: 0px 15px;
     list-style: none;
-    
-}
-
-.container-center-window {
-    
 }
 
 .login-box {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 80vh;
     justify-content: center;
+    margin-top: 40px;
 }
 
 .login-form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
     max-width: 380px;
     background-color: white;
     padding: 20px;
@@ -56,18 +46,22 @@ body {
     border: 1px solid #777;
     border-radius: 2px;
     font-size: 1em;
+    width: 100%;
 }
 
 .btn-submit {
     padding: 5px;
     width: 100px;
-    margin: 0 auto;
     border: 2px outset #333;
     font-size: 1em;
     border-radius: 2px;
+    display: block;
+    margin: 0 auto;
+
   }
 
 .alert {
     margin: 10px;
+    word-wrap: break-word;
 }
 

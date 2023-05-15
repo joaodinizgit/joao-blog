@@ -63,7 +63,7 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
     console.log(req.body)
-    //  login logic to validate req.body.user and req.body.pass
+    // login logic to validate req.body.user and req.body.pass
     // would be implemented here. for this example any combo works
     // TODO: Connect with database hashed
   

@@ -6,19 +6,13 @@ const escapeHtml = require('escape-html')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const port = 3000
+
 const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./db/users3.db')
 
-
-db.serialize(() => {
-    db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT)");
-
-    db.run("INSERT INTO users(username) VALUES ('do')");
-    
-});
-
-db.close();
-
+// Connect to the database
+function connectToDb() {
+    return new sqlite3.Database('./db/users3.db')
+}
 
 app.set("view engine", "ejs")
 
@@ -59,8 +53,29 @@ app.get('/', (req, res) => {
 })
 
 app.post('/register',registerIsValid, (req, res) => {
-    //  TODO: validate inputs
+    //  TODO: validate inputs more
     console.log(req.body)
+    // The code bellow will execute only if passed in registerIsValid middleware
+    // Hash the password
+    bcrypt.genSalt(saltRounds, function(err, salt) {
+        bcrypt.hash(req.body.pass, salt, function(err, hash) {
+
+            // Record in database with password hashed
+            const db = connectToDb();
+            db.serialize(() => {
+                db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, user TEXT NOT NULL, pass TEXT NOT NULL, timestamp DEFAULT CURRENT_TIMESTAMP)");
+                // TODO: check if username exist in database
+
+                db.run("INSERT INTO users(user, pass) VALUES (?, ?)", req.body.user, hash)
+                db.all("SELECT * FROM users;", (err, all) => {
+                    console.log(all)
+                })
+            });
+            
+            db.close();
+        });
+    });    
+    req.session.message = "Register success"
     res.redirect('/')
 })
 
@@ -80,7 +95,6 @@ app.post('/login', (req, res) => {
     // Hash the password:
     bcrypt.genSalt(saltRounds, function(err, salt) {
         bcrypt.hash(req.body.pass, salt, function(err, hash) {
-            // Store hash in your password DB.
             console.log("Password hashed: ",hash)
         });
     });

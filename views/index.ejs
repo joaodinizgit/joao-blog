@@ -3,6 +3,13 @@
 <body>
     <div class="title">
         <h1>Main Page</h1>
+
+       
+        <% if (message) { %>
+            <p class="alert"><%=message%></p>
+        <% } %>
+        
+
     </div>
 
     <% if (usr1) { %>

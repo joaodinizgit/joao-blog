@@ -82,3 +82,23 @@ body {
 .btn-post {
     padding: 10px 20px;
 }
+
+.recent-posts {
+    display: block;
+    margin: 40px auto;
+    max-width: 800px;
+    padding: 20px;
+}
+
+.title-recent-post {
+    margin: 10px 0px;
+}
+.author-post {
+    margin-bottom: 10px;
+}
+
+.text-recent-post {
+    font-size: 1.2em;
+    line-height: 1.4;
+    margin: 10px 0px;
+  }

@@ -2,13 +2,11 @@
 
 <body>
     <div class="title">
-        <h1>Recent Posts</h1>
-    </div>
-
-       
         <% if (message) { %>
             <p class="alert"><%=message%></p>
         <% } %>
+        <h1>Recent Posts</h1>
+    </div>
 
     <% if (posts) { %>
         <% for (post in posts) {%>
@@ -17,6 +15,7 @@
                 <h2 class="title-recent-post"><%=posts[post].title%></h2>
                 <p class="author-post"><%=posts[post].user%></p>
                 <p class="text-recent-post"><%-posts[post].text%></p>
+                <a href="/post/<%-posts[post].postId%>">Click here to read the full post</a>
             </div>
         <% } %>
     <% } %>

@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const inputRegisterAreValid = require('./middlewares/register-validation.js');
 const userIsRegistered = require('./middlewares/check-user-register.js');
+const slugGenerator = require('./middlewares/slug-generator.js');
 const session = require('express-session')
 const escapeHtml = require('escape-html')
 const bcrypt = require('bcrypt');
@@ -54,26 +55,34 @@ app.get('/', (req, res) => {
     // Load posts
     const db = connectToDb();
     db.serialize(() => {
-        // Check if username exist in database, if not it will record in database.
-        db.all("SELECT users.user, posts.title, posts.text, posts.timestamp FROM users INNER JOIN posts ON users.id = posts.authorId", (err, rows) => {
+        // Retrieve from database five recent post to show in main page.
+        db.all("SELECT users.user, posts.title, posts.postId, posts.text, posts.timestamp" + 
+                    " FROM users" +
+                    " INNER JOIN posts" +
+                    " ON users.id = posts.authorId" +
+                    " ORDER BY posts.timestamp" + 
+                    " DESC LIMIT 5", (err, rows) => {
             console.log(rows)  
             res.render("index", {title: "Index", posts: rows }) 
         })
     });
-    
 })
 
 app.post('/register',inputRegisterAreValid, (req, res) => {
     // TODO: Improve validate inputs
     console.log(req.body)
-    // The code bellow will execute only if passed in inputRegisterAreValid middleware.
     // Hash the password.
     bcrypt.genSalt(saltRounds, function(err, salt) {
         bcrypt.hash(req.body.pass, salt, function(err, hash) {
             // Record in database with password hashed.
             const db = connectToDb();
             db.serialize(() => {
-                db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, user TEXT NOT NULL, pass TEXT NOT NULL, email TEXT, timestamp DEFAULT CURRENT_TIMESTAMP)");
+                db.run("CREATE TABLE IF NOT EXISTS" +
+                " users (id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " user TEXT NOT NULL," + 
+                " pass TEXT NOT NULL," + 
+                " email TEXT," + 
+                " timestamp DEFAULT CURRENT_TIMESTAMP)");
                 // Check if username exist in database, if not it will record in database.
                 db.get("SELECT * FROM users WHERE user=?",req.body.user, (err, row) => {
                     if (row == undefined) {
@@ -143,23 +152,37 @@ app.get('/logout', (req, res, next) => {
     })
 })
 
-// TODO: Routes for New Posts
 app.route("/newpost")
 .get(isAuthenticated,(req, res) => {
     res.render("newpost", {title: "New Post"})
 })
-.post(isAuthenticated,(req, res) => {
+.post(isAuthenticated, slugGenerator, (req, res) => {
+    // TODO: Improve user inputs before insert in database.
     const post = req.body
-    // TODO: Check user inputs before insert in database
-    console.log(post)
+    console.log("LLLLLLL :",res.locals.titlePostSlug)
+    //console.log(post)
     // Insert in database
     const db = connectToDb();
     db.serialize(() => {
-        db.run("CREATE TABLE IF NOT EXISTS posts (postId INTEGER PRIMARY KEY AUTOINCREMENT, authorId INTERGER NOT NULL, title TEXT NOT NULL, text TEXT NOT NULL, timestamp DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(authorId) REFERENCES users (id))");
-        db.run("INSERT INTO posts(authorId, title, text) VALUES (?, ?, ?)", req.session.userId, post.title, post.text);
+        db.run("CREATE TABLE IF NOT EXISTS posts (" + 
+        " postId INTEGER PRIMARY KEY AUTOINCREMENT," +
+        " authorId INTERGER NOT NULL," +
+        " title TEXT NOT NULL," + 
+        " text TEXT NOT NULL," + 
+        " titleSlug TEXT" +
+        " timestamp DEFAULT CURRENT_TIMESTAMP," +
+        " FOREIGN KEY(authorId) REFERENCES users (id))");
+
+        db.run("INSERT INTO posts(authorId, title, text, titleSlug) VALUES (?, ?, ?, ?)", req.session.userId, post.title, post.text, res.locals.titlePostSlug);
     });
     db.close()
     res.redirect('/')
+})
+
+// Route for a specific post.
+// TODO: Use a slug.
+app.get('/post/:postId', (req, res) => {
+    res.send(req.params)
 })
 
 // Server listening

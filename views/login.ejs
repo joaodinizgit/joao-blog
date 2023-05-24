@@ -2,12 +2,16 @@
 
 <body>
     <div class="title">
+
+        <% if (message) { %>
+            <p class="alert"><%=message%></p>
+        <% } %>
         
     </div>
     <div class="login-box">
         <form class="login-form" action="/login" method="post">
             <h1 class="title">Login</h1>
-            <label for="user">User name:</label>
+            <label for="user">Username:</label>
             <input class="login-input" type="text" name="user" placeholder="Insert your username here" autocomplete="off" required autofocus>
             <label for="password">Password:</label>
             <input class="login-input" type="password" name="pass" placeholder="Password here" autocomplete="off" required>

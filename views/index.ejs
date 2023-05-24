@@ -2,21 +2,25 @@
 
 <body>
     <div class="title">
-        <h1>Main Page</h1>
+        <h1>Recent Posts</h1>
+    </div>
 
        
         <% if (message) { %>
             <p class="alert"><%=message%></p>
         <% } %>
-        
 
-    </div>
-
-    <% if (usr1) { %>
-        <p> 
-            <%=usr1 %> 
-        </p>
-    <% }  %>
+    <% if (posts) { %>
+        <% for (post in posts) {%>
+            <div class="recent-posts">
+                <p class="date-recent-post"><%=posts[post].timestamp%></p>
+                <h2 class="title-recent-post"><%=posts[post].title%></h2>
+                <p class="author-post"><%=posts[post].user%></p>
+                <p class="text-recent-post"><%-posts[post].text%></p>
+            </div>
+        <% } %>
+    <% } %>
+    
 </body>
 
 <%- include ("footer.ejs") %>

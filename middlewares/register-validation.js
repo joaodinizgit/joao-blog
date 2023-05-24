@@ -1,4 +1,4 @@
-module.exports = function registerIsValid (req, res, next) {
+module.exports = function inputRegisterAreValid (req, res, next) {
     const regex = /\W/g
     res.locals.test = " "
     console.log(req.body.user.search(regex));

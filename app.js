@@ -61,7 +61,7 @@ app.get('/', (req, res) => {
                     " INNER JOIN posts" +
                     " ON users.id = posts.authorId" +
                     " ORDER BY posts.timestamp" + 
-                    " DESC LIMIT 5", (err, rows) => {
+                    " DESC LIMIT 15", (err, rows) => {
             console.log(rows)  
             res.render("index", {title: "Index", posts: rows }) 
         })

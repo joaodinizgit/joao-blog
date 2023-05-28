@@ -37,7 +37,7 @@ app.use(function (req, res, next) {
     next()
 })
 
-// Middleware to check if user is logged
+// Middleware to copy session user name to use in header template
 app.use(function (req, res, next) { 
     res.locals.usr1 = req.session.user
     next()
@@ -62,7 +62,6 @@ app.get('/', (req, res) => {
                     " ON users.id = posts.authorId" +
                     " ORDER BY posts.timestamp" + 
                     " DESC LIMIT 15", (err, rows) => {
-            console.log(rows)  
             res.render("index", {title: "Index", posts: rows }) 
         })
     });
@@ -159,7 +158,6 @@ app.route("/newpost")
 .post(isAuthenticated, slugGenerator, (req, res) => {
     // TODO: Improve user inputs before insert in database.
     const post = req.body
-    console.log("LLLLLLL :",res.locals.titlePostSlug)
     //console.log(post)
     // Insert in database
     const db = connectToDb();
@@ -183,6 +181,63 @@ app.route("/newpost")
 // TODO: Use a slug.
 app.get('/post/:postId', (req, res) => {
     res.send(req.params)
+})
+
+// Route to My Posts
+app.get('/myposts', isAuthenticated, (req, res) => {
+     // Load posts from user
+     const db = connectToDb();
+     db.serialize(() => {
+         // Retrieve all post from the user.
+         db.all("SELECT users.user, posts.title, posts.postId, posts.timestamp" + 
+                     " FROM users" +
+                     " INNER JOIN posts" +
+                     " ON users.id = posts.authorId" +
+                     " WHERE id=?" + 
+                     " ORDER BY posts.timestamp" + 
+                     " DESC", req.session.userId, (err, rows) => {
+             //console.log(rows)  
+             res.render("myposts", {title: "My Posts", posts: rows }) 
+         })
+     }); 
+})
+
+app.post('/editpost', isAuthenticated, (req, res) => {
+    const db = connectToDb();
+    db.serialize(() => {
+        // Edit post.
+        db.all("SELECT *" + 
+                " FROM posts" +
+                " WHERE postId=? AND authorId=?",req.body.postId, req.session.userId, (err, rows) => {
+            res.render("editpost", {title: "Edit Post", posts: rows }) 
+        })
+    }); 
+})
+
+app.post('/updatepost', isAuthenticated, slugGenerator, (req, res) => {
+    const db = connectToDb();
+    db.serialize(() => {
+        // Update Post.
+        db.run("UPDATE posts" + 
+                " SET title=?, text=?, titleSlug=?" +
+                " WHERE postId=? AND authorId=?",req.body.title, req.body.text, res.locals.titlePostSlug, req.body.postId, req.session.userId, (err) => {
+            db.close()
+            res.redirect('/')
+        })
+    }); 
+})
+
+app.post('/deletepost', isAuthenticated, (req, res) => {
+    // Load posts from user
+    const db = connectToDb();
+    db.serialize(() => {
+        // Delete Post.
+        db.run("DELETE FROM posts" + 
+                " WHERE postId=? AND authorId=?", req.body.postId, req.session.userId, (err) => {
+            db.close()
+            res.redirect('/')
+        })
+    }); 
 })
 
 // Server listening

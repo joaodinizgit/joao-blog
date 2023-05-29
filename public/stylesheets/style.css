@@ -97,6 +97,27 @@ body {
     padding: 10px;
 }
 
+.my-posts-box {
+    display: block;
+    margin: 40px auto;
+    max-width: 1000px;
+    padding: 10px;
+    border: 1px solid #eee;
+    box-shadow: 0px 0px 1px;
+}
+
+.del-post-box {
+    max-width: 780px;
+    display: flex;
+    flex-direction: row;
+    margin: 40px auto;
+    justify-content: center;
+}
+
+.btn-post-del {
+    padding: 10px;
+}
+
 .title-recent-post {
     margin: 10px 0px;
 }

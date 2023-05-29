@@ -16,7 +16,12 @@
             <input class="btn-post" type="submit" value="Save">
         </form>
     </div>
-            </div>
+    <div class="del-post-box">
+        <form action="/deletepost" method="post">
+            <input  class="hidden" name="postId" type="number" value="<%-posts[post].postId%>" readonly>
+            <input class="btn-post-del" type="submit" value="Delete Post">
+        </form>
+    </div>
         <% } %>
     <% } %>
     </body>

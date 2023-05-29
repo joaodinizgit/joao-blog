@@ -10,7 +10,7 @@ module.exports = function slugGenerator (req, res, next) {
         titleSlug = titleSlug.replaceAll(ascent[letter], noAscent[letter]);
     }
 
-    // Replace all non alphanumeric in by "-"
+    // Replace all non alphanumeric by "-"
     regexNonAlphaNum = /[^a-z0-9]+/g;
     const firstReplace = titleSlug.replaceAll(regexNonAlphaNum, '-')
 

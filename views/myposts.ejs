@@ -1,25 +1,25 @@
 <%- include ("header.ejs") %>
 
 <body>
-    <h1 class="title">My Posts</h1>
-   
+    <div class="title">
+        <% if (message) { %>
+            <p class="alert"><%=message%></p>
+        <% } %>
+        <h1 class="title">My Posts</h1>
+    </div>
+
     <% if (posts) { %>
         <% for (post in posts) {%>
-            <div class="recent-posts">
+            <div class="my-posts-box">
                 <p class="date-recent-post"><%=posts[post].timestamp%></p>
-                <h2 class="title-recent-post"><%=posts[post].title%></h2>
                 <p class="author-post"><%=posts[post].user%></p>
+                <h3 class="title-recent-post"><%=posts[post].title%></h3>
                 <p class="text-recent-post"><%-posts[post].text%></p>
 
                 <form action="/editpost" method="post">
                     <input  class="hidden" name="postId" type="number" value="<%-posts[post].postId%>" readonly>
                     <input class="btn-post" type="submit" value="Edit Post">
                 </form>
-                <form action="/deletepost" method="post">
-                    <input  class="hidden" name="postId" type="number" value="<%-posts[post].postId%>" readonly>
-                    <input class="btn-post" type="submit" value="Delete Post">
-                </form>
-            
             </div>
         <% } %>
     <% } %>

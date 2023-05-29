@@ -8,7 +8,6 @@ const escapeHtml = require('escape-html')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const port = 3000
-
 const sqlite3 = require('sqlite3').verbose();
 
 // Connect to the database
@@ -18,7 +17,7 @@ function connectToDb() {
 
 app.set("view engine", "ejs")
 
-// To take objects from a form
+// To take objects from a form.
 app.use(express.urlencoded( {extended: true}))
 //app.use(express.json()) // for parsing application/json
 
@@ -49,49 +48,47 @@ function isAuthenticated (req, res, next) {
     else res.redirect('/')
 }
 
-// Routes
+// Load from database 15 recent post to show in main page.
 app.get('/', (req, res) => {
-    
-    // Load posts
     const db = connectToDb();
     db.serialize(() => {
-        // Retrieve from database five recent post to show in main page.
         db.all("SELECT users.user, posts.title, posts.postId, posts.text, posts.timestamp" + 
                     " FROM users" +
                     " INNER JOIN posts" +
                     " ON users.id = posts.authorId" +
                     " ORDER BY posts.timestamp" + 
                     " DESC LIMIT 15", (err, rows) => {
-            res.render("index", {title: "Index", posts: rows }) 
+            res.render("index", {title: "My Blog", posts: rows }) 
         })
     });
 })
 
+// Register user.
 app.post('/register',inputRegisterAreValid, (req, res) => {
-    // TODO: Improve validate inputs
-    console.log(req.body)
+    // TODO: Improve inputs validation
     // Hash the password.
     bcrypt.genSalt(saltRounds, function(err, salt) {
         bcrypt.hash(req.body.pass, salt, function(err, hash) {
             // Record in database with password hashed.
             const db = connectToDb();
             db.serialize(() => {
-                db.run("CREATE TABLE IF NOT EXISTS" +
-                " users (id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                db.run("CREATE TABLE IF NOT EXISTS users (" +
+                " id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " user TEXT NOT NULL," + 
                 " pass TEXT NOT NULL," + 
                 " email TEXT," + 
                 " timestamp DEFAULT CURRENT_TIMESTAMP)");
-                // Check if username exist in database, if not it will record in database.
+                // Check if username exists in database, if not, record.
                 db.get("SELECT * FROM users WHERE user=?",req.body.user, (err, row) => {
                     if (row == undefined) {
-                        db.run("INSERT INTO users(user, pass, email, name) VALUES (?, ?, ?, ?)", req.body.user, hash, req.body.email, req.body.name);
-                        db.close();
+                        db.run("INSERT INTO users(user, pass, email, name)" +
+                        " VALUES (?, ?, ?, ?)", req.body.user, hash, req.body.email, req.body.name);
                         req.session.message = "Register success!"
+                        db.close();
                         res.redirect('/')
                     } else {
-                        db.close();
                         req.session.message = "Username not available. Choose another."
+                        db.close();
                         res.redirect('/register')
                     }
                 })
@@ -158,8 +155,7 @@ app.route("/newpost")
 .post(isAuthenticated, slugGenerator, (req, res) => {
     // TODO: Improve user inputs before insert in database.
     const post = req.body
-    //console.log(post)
-    // Insert in database
+    // Record new post in database. Create if table doesn't exist.
     const db = connectToDb();
     db.serialize(() => {
         db.run("CREATE TABLE IF NOT EXISTS posts (" + 
@@ -170,8 +166,8 @@ app.route("/newpost")
         " titleSlug TEXT" +
         " timestamp DEFAULT CURRENT_TIMESTAMP," +
         " FOREIGN KEY(authorId) REFERENCES users (id))");
-
-        db.run("INSERT INTO posts(authorId, title, text, titleSlug) VALUES (?, ?, ?, ?)", req.session.userId, post.title, post.text, res.locals.titlePostSlug);
+        db.run("INSERT INTO posts(authorId, title, text, titleSlug)" + 
+                " VALUES (?, ?, ?, ?)", req.session.userId, post.title, post.text, res.locals.titlePostSlug);
     });
     db.close()
     res.redirect('/')
@@ -183,12 +179,10 @@ app.get('/post/:postId', (req, res) => {
     res.send(req.params)
 })
 
-// Route to My Posts
+// Show all post from the user.
 app.get('/myposts', isAuthenticated, (req, res) => {
-     // Load posts from user
      const db = connectToDb();
      db.serialize(() => {
-         // Retrieve all post from the user.
          db.all("SELECT users.user, posts.title, posts.postId, posts.timestamp" + 
                      " FROM users" +
                      " INNER JOIN posts" +
@@ -196,46 +190,43 @@ app.get('/myposts', isAuthenticated, (req, res) => {
                      " WHERE id=?" + 
                      " ORDER BY posts.timestamp" + 
                      " DESC", req.session.userId, (err, rows) => {
-             //console.log(rows)  
-             res.render("myposts", {title: "My Posts", posts: rows }) 
+            res.render("myposts", {title: "My Posts", posts: rows }) 
          })
      }); 
 })
 
+// Edit a specific post.
 app.post('/editpost', isAuthenticated, (req, res) => {
     const db = connectToDb();
     db.serialize(() => {
-        // Edit post.
-        db.all("SELECT *" + 
-                " FROM posts" +
-                " WHERE postId=? AND authorId=?",req.body.postId, req.session.userId, (err, rows) => {
+        db.all("SELECT * FROM posts WHERE postId=? AND authorId=?",req.body.postId, req.session.userId, (err, rows) => {
             res.render("editpost", {title: "Edit Post", posts: rows }) 
         })
     }); 
 })
 
+// Update Post from user.
 app.post('/updatepost', isAuthenticated, slugGenerator, (req, res) => {
     const db = connectToDb();
     db.serialize(() => {
-        // Update Post.
-        db.run("UPDATE posts" + 
-                " SET title=?, text=?, titleSlug=?" +
+        db.run("UPDATE posts SET title=?, text=?, titleSlug=?" +
                 " WHERE postId=? AND authorId=?",req.body.title, req.body.text, res.locals.titlePostSlug, req.body.postId, req.session.userId, (err) => {
             db.close()
+            req.session.message = "Post updated!"
             res.redirect('/')
         })
     }); 
 })
 
+// Delete post from user.
 app.post('/deletepost', isAuthenticated, (req, res) => {
-    // Load posts from user
     const db = connectToDb();
     db.serialize(() => {
-        // Delete Post.
         db.run("DELETE FROM posts" + 
                 " WHERE postId=? AND authorId=?", req.body.postId, req.session.userId, (err) => {
             db.close()
-            res.redirect('/')
+            req.session.message = "Post deleted!"
+            res.redirect('/myposts')
         })
     }); 
 })

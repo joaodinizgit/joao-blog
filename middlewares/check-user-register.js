@@ -15,19 +15,15 @@ module.exports = function userIsRegistered (req, res, next) {
                 // Compare password hashed from database with input.
                 bcrypt.compare(req.body.pass, row.pass, function(err, result) {
                     if (result) {
-                        console.log("User Found!")
-                        console.log(row.id)
                         req.userId = row.id;
                         req.session.message = "Login successfully!"
                         next()
                     } else {
-                        console.log("Password wrong")
                         req.session.message = "Wrong password!"
                         res.redirect('/login')
                     }
                 });
             }
         })
-    
     })
 }

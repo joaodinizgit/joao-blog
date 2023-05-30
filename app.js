@@ -164,7 +164,7 @@ app.route("/newpost")
         " authorId INTERGER NOT NULL," +
         " title TEXT NOT NULL," + 
         " text TEXT NOT NULL," + 
-        " titleSlug TEXT" +
+        " titleSlug TEXT," +
         " timestamp DEFAULT CURRENT_TIMESTAMP," +
         " FOREIGN KEY(authorId) REFERENCES users (id))");
         db.run("INSERT INTO posts(authorId, title, text, titleSlug)" + 

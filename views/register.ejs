@@ -7,25 +7,18 @@
                 <p class="alert"><%=message%></p>
             <% } %>
     </div>
-    
-    <div class="login-box">
-        
-        <form class="login-form" action="/register" method="post">
-            <h1 class="title">Register</h1>
-            <label for="name">Name:</label>
-            <input class="login-input" type="text" name="name" required autocomplete="off" autofocus placeholder="Insert your name here" maxlength="50">
-            <label for="user">Create a username:</label>
-            <input class="login-input" type="text" name="user" required autocomplete="off" placeholder="Insert username here" minlength="4" maxlength="50">
-            <label for="email">Email:</label>
-            <input class="login-input" type="email" name="email" required autocomplete="off" placeholder="Insert your email here" minlenth="6" maxlenth="50">
-            <label for="pass">Create a password:</label>
-            <input class="login-input" type="password" name="pass" required autocomplete="off" placeholder="Create a password here" minlength="4">
-            
-            <input class="btn-submit" type="submit" value="Register">
-        </form>
-    </div>
-    
-    
+    <form class="login-form" action="/register" method="post">
+        <h2 class="title">Register</h2>
+        <label for="name">Name</label>
+        <input class="login-input" type="text" name="name" required autocomplete="off" autofocus placeholder="Insert your name here" maxlength="50">
+        <label for="user">Username</label>
+        <input class="login-input" type="text" name="user" required autocomplete="off" placeholder="Insert username here" minlength="4" maxlength="50">
+        <label for="email">Email</label>
+        <input class="login-input" type="email" name="email" required autocomplete="off" placeholder="Insert your email here" minlenth="6" maxlenth="50">
+        <label for="pass">Password</label>
+        <input class="login-input" type="password" name="pass" required autocomplete="off" placeholder="Create a password here" minlength="4">
+        <input class="btn" type="submit" value="Register">
+    </form>
 </body>
 
 

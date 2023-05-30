@@ -77,6 +77,7 @@ app.post('/register',inputRegisterAreValid, (req, res) => {
                 " user TEXT NOT NULL," + 
                 " pass TEXT NOT NULL," + 
                 " email TEXT," + 
+                " name TEXT," +
                 " timestamp DEFAULT CURRENT_TIMESTAMP)");
                 // Check if username exists in database, if not, record.
                 db.get("SELECT * FROM users WHERE user=?",req.body.user, (err, row) => {

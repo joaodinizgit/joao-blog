@@ -19,7 +19,6 @@ app.set("view engine", "ejs")
 
 // To take objects from a form.
 app.use(express.urlencoded( {extended: true}))
-//app.use(express.json()) // for parsing application/json
 
 app.use(express.static('public'))
 
@@ -48,7 +47,7 @@ function isAuthenticated (req, res, next) {
     else res.redirect('/')
 }
 
-// Load from database 15 recent post to show in main page.
+// Load from database 15 most recent posts to show in main page.
 app.get('/', (req, res) => {
     const db = connectToDb();
     db.serialize(() => {
@@ -79,7 +78,7 @@ app.post('/register',inputRegisterAreValid, (req, res) => {
                 " email TEXT," + 
                 " name TEXT," +
                 " timestamp DEFAULT CURRENT_TIMESTAMP)");
-                // Check if username exists in database, if not, record.
+                // Check if username exists in database, if not, insert.
                 db.get("SELECT * FROM users WHERE user=?",req.body.user, (err, row) => {
                     if (row == undefined) {
                         db.run("INSERT INTO users(user, pass, email, name)" +
@@ -129,8 +128,6 @@ app.post('/login', userIsRegistered, (req, res) => {
 })
   
 app.get('/logout', (req, res, next) => {
-    // logout logic
-    
     // clear the user from the session object and save.
     // this will ensure that re-using the old session id
     // does not have a logged in user

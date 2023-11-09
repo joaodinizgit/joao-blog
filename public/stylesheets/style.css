@@ -7,7 +7,7 @@
 body {
     font-family: sans-serif, serif;
     margin: 0;
-    background-color: #eee;
+    background-color:white;
 }
 
 .title {
@@ -28,7 +28,6 @@ body {
 .navbar-ul li {
     margin: 0px 15px;
     list-style: none;
-    font-weight: 500;
 }
 
 a {
@@ -53,7 +52,7 @@ a:visted {
     padding: 20px;
     box-shadow: 1px 1px 3px #888;
     display: grid;
-    max-width: 300px;
+    max-width: 350px;
     margin: 0 auto;
     margin-top: 40px;
 }
@@ -61,7 +60,10 @@ a:visted {
 .login-input {
     margin-top: 5px;
     margin-bottom: 20px;
-    padding: 5px;
+    padding: 10px;
+    font-size: 1.2em;
+    border: 1px solid gray;
+    border-radius: 4px;
 }
 
 .login-input:user-invalid {
@@ -75,6 +77,7 @@ a:visted {
     display: block;
     width: 100%;
     margin-top:10px;
+
   }
 
 .alert {
@@ -91,25 +94,29 @@ a:visted {
 }
 
 .post-input {
-    padding: 5px;
+    padding: 10px;
+    font-size: 1.2em;
     margin: 5px 0px 20px;
     font-family: sans-serif;
+    border: 1px solid grey;
+    border-radius: 4px;
 }
 
 .btn-post {
     padding: 10px;
-    font-weight: bold;
+    font-size: 1.2em;
 }
 
 .btn {
     padding: 10px;
-    font-weight: bold;
+    font-size: 1.2em;
 }
 
 .recent-posts {
     display: block;
     margin: 40px auto;
     padding: 10px;
+    max-width: 1000px;
 }
 
 .my-posts-box {
@@ -119,6 +126,7 @@ a:visted {
     padding: 10px;
     border: 1px solid #eee;
     box-shadow: 0px 0px 1px;
+    border-radius: 4px;
 }
 
 .del-post-box {

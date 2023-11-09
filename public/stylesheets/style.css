@@ -31,12 +31,12 @@ body {
 }
 
 a {
-    text-decoration: none;
+    text-decoration: underline 2px #888;
     color: black;
 }
 
 a:hover {
-    text-decoration: underline 2px #888;
+    text-decoration: underline 2px #000;
 }
 
 a:visted {
@@ -44,7 +44,7 @@ a:visted {
 }
 
 .login-box {
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .login-form {
@@ -112,11 +112,20 @@ a:visted {
     font-size: 1.2em;
 }
 
+.date-recent-post {
+    font-size: small;
+    color: grey;
+}
+
+.author-post {
+    font-style: italic;
+}
+
 .recent-posts {
     display: block;
-    margin: 40px auto;
-    padding: 10px;
-    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 960px;
 }
 
 .my-posts-box {

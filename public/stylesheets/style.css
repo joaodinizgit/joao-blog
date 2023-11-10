@@ -1,21 +1,25 @@
 * {
-    margin: 0px;
-    padding: 0px;
     box-sizing: border-box;
 }
 
 body {
     font-family: sans-serif, serif;
     margin: 0;
-    background-color:white;
+    background-color: white;
 }
 
 .title {
-    text-align: center;
-    margin: 20px
+    text-align: left;
+    color: #808080;
+    margin: 0px;
 }
+
+.title::before {
+    content: '>>';
+}
+
 .navbar {
-    padding: 15px 0px;
+    padding: 0px;
 }
 
 .navbar-ul {
@@ -61,9 +65,9 @@ a:visted {
     margin-top: 5px;
     margin-bottom: 20px;
     padding: 10px;
-    font-size: 1.2em;
     border: 1px solid gray;
     border-radius: 4px;
+    font-size: 1em;
 }
 
 .login-input:user-invalid {
@@ -73,16 +77,16 @@ a:visted {
 .btn-submit {
     padding: 15px 10px;
     border: none;
-    font-size: 1.2em;
+    font-size: 1em;
     display: block;
     width: 100%;
-    margin-top:10px;
-
-  }
+    margin-top: 10px;
+}
 
 .alert {
     margin: 10px;
     word-wrap: break-word;
+    text-align: center;
 }
 
 .post-form {
@@ -95,7 +99,7 @@ a:visted {
 
 .post-input {
     padding: 10px;
-    font-size: 1.2em;
+    font-size: 1em;
     margin: 5px 0px 20px;
     font-family: sans-serif;
     border: 1px solid grey;
@@ -104,28 +108,36 @@ a:visted {
 
 .btn-post {
     padding: 10px;
-    font-size: 1.2em;
+    font-size: 1em;
 }
 
 .btn {
     padding: 10px;
-    font-size: 1.2em;
+    font-size: 1em;
 }
 
 .date-recent-post {
     font-size: small;
     color: grey;
+    text-align: center;
+}
+
+.title-recent-post {
+    text-align: center;
 }
 
 .author-post {
     font-style: italic;
+    text-align: center;
 }
 
 .recent-posts {
     display: block;
-    margin: 20px auto;
+    margin: 0px auto;
     padding: 20px;
-    max-width: 960px;
+    max-width: 1220px;
+    line-height: 1.6;
+    font-size: 1.25em;
 }
 
 .my-posts-box {
@@ -144,11 +156,6 @@ a:visted {
     flex-direction: row;
     margin: 40px auto;
     justify-content: center;
-}
-
-.text-recent-post {
-    margin: 10px 0px;
-    line-height: 1.5;
 }
 
 .hidden {

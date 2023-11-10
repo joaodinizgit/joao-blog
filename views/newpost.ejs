@@ -1,12 +1,12 @@
 <%- include ("header.ejs") %>
 
 <body>
-    <h1 class="title">New Post</h1>
+    <h3 class="title">New Post</h3>
     <div class="newpost-box">
         <form class="post-form" action="/newpost" method="post">
             <label for="title">Title</label>
             <input class="post-input" type="text" required autocomplete="off" autofocus name="title" placeholder="Title of your post here">
-            <label for="textpost" >Text</label>
+            <label for="textpost" >Content</label>
             <textarea class="post-input" name="text" rows="20" autocomplete="off" required placeholder="Write your text here..."></textarea>
             <input class="btn-post" type="submit" value="Post">
         </form>

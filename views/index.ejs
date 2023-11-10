@@ -1,21 +1,21 @@
 <%- include ("header.ejs") %> 
 
 <body>
-    <div class="title">
-        <% if (message) { %>
-            <p class="alert"><%=message%></p>
-        <% } %>
+    <% if (message) { %>
+        <p class="alert"><%=message%></p>
+    <% } %>
         
-        <h1>Recent Posts</h1>
-    </div>
+    <h3 class="title">Recent Posts</h3>
+
     <% if (posts) { %>
         <% for (post in posts) {%>
             <div class="recent-posts">
-                <p class="date-recent-post"><%=posts[post].timestamp%></p>
                 <h1 class="title-recent-post"><%=posts[post].title%></h1>
-                <p class="author-post"><%=posts[post].user%></p>
+                <p class="date-recent-post"><%=posts[post].timestamp%>, <%=posts[post].user%></p>
+                <!--<p class="author-post"><%=posts[post].user%></p>-->
                 <p class="text-recent-post"><%-posts[post].text%></p>
                 <!--<a href="/post/<%-posts[post].postId%>">Click here to read the full post</a>-->
+                <hr>
             </div>
         <% } %>
     <% } %>

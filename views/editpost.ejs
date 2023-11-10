@@ -1,16 +1,16 @@
 <%- include ("header.ejs") %>
 
 <body>
-    <h1 class="title">Edit Post</h1>
+    <h3 class="title">Edit Post</h3>
 
     <% if (posts) { %>
         <% for (post in posts) {%>
             
     <div class="newpost-box">
         <form class="post-form" action="/updatepost" method="post">
-            <label for="title">Title:</label>
+            <label for="title">Title</label>
             <input class="post-input" type="text" required autocomplete="off" autofocus name="title" value="<%=posts[post].title%>">
-            <label for="textpost" >Text: </label>
+            <label for="textpost" >Content</label>
             <textarea class="post-input" name="text" rows="20" autocomplete="off" required placeholder="Write your text here..."><%=posts[post].text%></textarea>
             <input  class="hidden" name="postId" type="number" value="<%-posts[post].postId%>" readonly>
             <input class="btn" type="submit" value="Save">

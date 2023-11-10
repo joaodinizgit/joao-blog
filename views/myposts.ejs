@@ -1,19 +1,17 @@
 <%- include ("header.ejs") %>
 
 <body>
-    <div class="title">
-        <% if (message) { %>
-            <p class="alert"><%=message%></p>
-        <% } %>
-        <h1 class="title">My Posts</h1>
-    </div>
+    <% if (message) { %>
+        <p class="alert"><%=message%></p>
+    <% } %>
+
+    <h3 class="title">My Posts</h3>
 
     <% if (posts) { %>
         <% for (post in posts) {%>
             <div class="my-posts-box">
-                <p class="date-recent-post"><%=posts[post].timestamp%></p>
-                <p class="author-post"><%=posts[post].user%></p>
                 <h3 class="title-recent-post"><%=posts[post].title%></h3>
+                <p class="date-recent-post"><%=posts[post].timestamp%>, <%=posts[post].user%></p>
                 <p class="text-recent-post"><%-posts[post].text%></p>
 
                 <form action="/editpost" method="post">

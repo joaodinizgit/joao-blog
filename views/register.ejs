@@ -1,13 +1,12 @@
 <%- include ("header.ejs") %> 
 
 <body>
-    <div class="title">
-            <% if (message) { %>
-                <p class="alert"><%=message%></p>
-            <% } %>
+    <% if (message) { %>
+        <p class="alert"><%=message%></p>
+    <% } %>
 
-            <h1 class="title">Register</h1>
-    </div>
+    <h3 class="title">Register</h3>
+    
     <form class="login-form" action="/register" method="post">
         <label for="name">Name</label>
         <input class="login-input" type="text" name="name" required autocomplete="off" autofocus placeholder="Insert your name here" maxlength="50">

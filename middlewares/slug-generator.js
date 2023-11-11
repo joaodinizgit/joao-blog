@@ -1,4 +1,4 @@
-module.exports = function slugGenerator (req, res, next) {
+module.exports = function slugGenerator(req, res, next) {
     // Put the title in lower case.
     let titleSlug = req.body.title.toLowerCase();
 
@@ -12,10 +12,10 @@ module.exports = function slugGenerator (req, res, next) {
 
     // Replace all non alphanumeric by "-"
     regexNonAlphaNum = /[^a-z0-9]+/g;
-    const firstReplace = titleSlug.replaceAll(regexNonAlphaNum, '-')
+    const firstReplace = titleSlug.replaceAll(regexNonAlphaNum, "-");
 
     // Remove "-" from the beginning or and.
     regexStartEnd = /(^\W+|\W+$)/g;
-    res.locals.titlePostSlug = firstReplace.replace(regexStartEnd, "")
-    next()
-}
+    res.locals.titlePostSlug = firstReplace.replace(regexStartEnd, "");
+    next();
+};

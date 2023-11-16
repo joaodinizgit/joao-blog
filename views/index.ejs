@@ -11,7 +11,7 @@
         <% for (post in posts) {%>
             <div class="recent-posts">
                 <h1 class="title-recent-post"><%=posts[post].title%></h1>
-                <p class="date-recent-post"><%=posts[post].timestamp%>, <%=posts[post].user%></p>
+                <p class="date-recent-post"><%=posts[post].timestamp%> by <%=posts[post].name%></p>
                 <!--<p class="author-post"><%=posts[post].user%></p>-->
                 <p class="text-recent-post"><%-posts[post].text%></p>
                 <!--<a href="/post/<%-posts[post].postId%>">Click here to read the full post</a>-->

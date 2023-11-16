@@ -54,7 +54,7 @@ app.get("/", (req, res) => {
     const db = connectToDb();
     db.serialize(() => {
         db.all(
-            "SELECT users.user, posts.title, posts.postId, posts.text, posts.timestamp" +
+            "SELECT name, posts.title, posts.postId, posts.text, posts.timestamp" +
                 " FROM users" +
                 " INNER JOIN posts" +
                 " ON users.id = posts.authorId" +
@@ -76,15 +76,6 @@ app.post("/register", inputRegisterAreValid, (req, res) => {
             // Record in database with password hashed.
             const db = connectToDb();
             db.serialize(() => {
-                db.run(
-                    "CREATE TABLE IF NOT EXISTS users (" +
-                        " id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        " user TEXT NOT NULL," +
-                        " pass TEXT NOT NULL," +
-                        " email TEXT," +
-                        " name TEXT," +
-                        " timestamp DEFAULT CURRENT_TIMESTAMP)"
-                );
                 // Check if username exists in database, if not, insert.
                 db.get(
                     "SELECT * FROM users WHERE user=?",
@@ -208,7 +199,7 @@ app.get("/myposts", isAuthenticated, (req, res) => {
     const db = connectToDb();
     db.serialize(() => {
         db.all(
-            "SELECT users.user, posts.title, posts.postId, posts.timestamp" +
+            "SELECT name, posts.title, posts.postId, posts.timestamp" +
                 " FROM users" +
                 " INNER JOIN posts" +
                 " ON users.id = posts.authorId" +

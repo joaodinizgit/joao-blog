@@ -165,16 +165,7 @@ app.route("/newpost")
         // Record new post in database. Create if table doesn't exist.
         const db = connectToDb();
         db.serialize(() => {
-            db.run(
-                "CREATE TABLE IF NOT EXISTS posts (" +
-                    " postId INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " authorId INTERGER NOT NULL," +
-                    " title TEXT NOT NULL," +
-                    " text TEXT NOT NULL," +
-                    " titleSlug TEXT," +
-                    " timestamp DEFAULT CURRENT_TIMESTAMP," +
-                    " FOREIGN KEY(authorId) REFERENCES users (id))"
-            );
+            // Insert a new post in database
             db.run(
                 "INSERT INTO posts(authorId, title, text, titleSlug)" +
                     " VALUES (?, ?, ?, ?)",
